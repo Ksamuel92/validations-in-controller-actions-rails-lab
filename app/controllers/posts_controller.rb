@@ -8,9 +8,14 @@ class PostsController < ApplicationController
   end
 
   def update
+    @post = Post.find(params[:id])
+    if !@post.update(post_params)
+      @post.errors.details[:category] << "You fucked up"
+      render :edit
+    else
     @post.update(post_params)
-
     redirect_to post_path(@post)
+    end
   end
 
   private
